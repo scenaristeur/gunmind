@@ -10,28 +10,32 @@ const mutations = {
   setGun(state, g){
     state.gun = g
   },
-  setGunBrains(state, b){
-    state.gunBrains = b
-  },
-  async addGunBrains(state, b){
-  //  console.log(b)
-    const index = state.gunBrains.findIndex(object => object.key == b.key);
-    //console.log(index)
-    if (index === -1) {
-      let br = Object.assign({},b.node)
-      br.key = b.key
-       state.gunBrains.push(br)
-      // await Vue.prototype.$gun.get(b.key).open(async (doc) => {
-      //   console.log("doc",b.key,  doc)
-      //   doc.key = b.key
-      //   await state.gunBrains.push(doc)
-      // })
-
-    }
+  updateBrain(state,g){
+    state.gunBrains[g.key] =  g.node
     console.log(state.gunBrains)
-
-
   },
+  // setGunBrains(state, b){
+  //   state.gunBrains = b
+  // },
+  // async addGunBrains(state, b){
+  // //  console.log(b)
+  //   const index = state.gunBrains.findIndex(object => object.key == b.key);
+  //   //console.log(index)
+  //   if (index === -1) {
+  //     let br = Object.assign({},b.node)
+  //     br.key = b.key
+  //      state.gunBrains.push(br)
+  //     // await Vue.prototype.$gun.get(b.key).open(async (doc) => {
+  //     //   console.log("doc",b.key,  doc)
+  //     //   doc.key = b.key
+  //     //   await state.gunBrains.push(doc)
+  //     // })
+  //
+  //   }
+  //   console.log(state.gunBrains)
+  //
+  //
+  // },
   setRootNode(state,r){
     state.rootNode = r
   }

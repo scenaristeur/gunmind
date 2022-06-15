@@ -1,5 +1,8 @@
 # gunmind
 
+- first : config peers in src/main.js
+
+
 ## Project setup
 ```
 npm install
