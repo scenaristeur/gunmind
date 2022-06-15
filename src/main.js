@@ -15,17 +15,17 @@ import 'gun/nts'
 
 export const gun = Gun({
   peers: [
-    // 'https://spogg.herokuapp.com/gun',
-    'http://localhost:8090/gun',
-    // 'https://gun-manhattan.herokuapp.com/gun',
-    // 'http://gunjs.herokuapp.com/gun/'*/
+    'https://spogg.herokuapp.com/gun',
+    // 'http://localhost:8090/gun',
+    'https://gun-manhattan.herokuapp.com/gun',
+    // 'http://gunjs.herokuapp.com/gun/'
   ],// run gun-starter-app on port 9090,
-    localStorage:false
-  })
-  console.log(SEA, gun)
+  localStorage:false
+})
+console.log(SEA, gun)
 
-  import GunPlugin from './plugins/gun-plugin';
+import GunPlugin from './plugins/gun-plugin';
 
-  const app = createApp(App)
-  app.use(GunPlugin, {store: store, gun: gun});
-  app.use(store).mount('#app')
+const app = createApp(App)
+app.use(GunPlugin, {store: store, gun: gun});
+app.use(store).mount('#app')

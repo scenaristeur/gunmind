@@ -1,12 +1,13 @@
 <template>
   <div class="hello">
     <input v-model="root" placeholder="root Node"/>
-    <button @click="updateRootNode">Update rootNode</button>
-    <button @click="resetRootNode">Reset RootNode</button><br>
+    <button @click="updateRootNode">Change Workspace</button>
+    <button @click="resetRootNode">Default Workspace</button><br>
     <input v-model="node.name" />
     <button @click="save">Save</button>
     <!-- - {{ brains }} - -->
     <BrainView v-for="brain in brains" :key="brain['#']" :brain="brain" />
+    workspaces
   </div>
 </template>
 
