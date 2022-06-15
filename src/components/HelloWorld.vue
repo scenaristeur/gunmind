@@ -1,5 +1,8 @@
 <template>
   <div class="hello">
+    <input v-model="root" placeholder="root Node"/>
+    <button @click="updateRootNode">Update rootNode</button>
+    <button @click="resetRootNode">Reset RootNode</button><br>
     <input v-model="node.name" />
     <button @click="save">Save</button>
     <!-- - {{ brains }} - -->
@@ -18,42 +21,55 @@ export default {
   data(){
     return {
       node:  {},
-      brains: []
+      brains: {},
+      root : this.$store.state.gun.rootNode
     }
   },
   created(){
-    let app = this
-    let gun = this.$store.state.gun.gun
-
-
-    gun.get(this.$store.state.gun.rootNode).map().on(
-  async function(node,key){app.update(node,key) }
-      // let n = JSON.parse(JSON.stringify(node))
-      // app.$store.commit('gun/updateBrain', {key:key, node:n})
-      //  }
-    )
+    this.listen()
   },
   methods: {
+    resetRootNode(){
+        this.$store.commit('gun/setRootNode', "test-brains")
+    },
+    updateRootNode(){
+      this.$store.commit('gun/setRootNode', this.root)
+      this.brains = {}
+    },
+    listen(){
+      console.log("listen", this.root)
+      let app = this
+      let gun = this.$store.state.gun.gun
+      gun.get(this.root).map().on(
+        async function(node,key){app.update(node,key) }
+        // let n = JSON.parse(JSON.stringify(node))
+        // app.$store.commit('gun/updateBrain', {key:key, node:n})
+        //  }
+      )
+    },
     async update(node,key){
-      // console.log(node,key)
-      // async function(node, key)
-      // // store.commit('gun/addGunBrains', {node:node, key: key}
-      // {
-        //  console.log(node, key)
-        // let brains = JSON.parse(JSON.stringify(this.brains))
-        // console.log(brains)
-        let n = JSON.parse(JSON.stringify(node['_']['>'])) //Object.assign({},node['_']['>'])
-        n.id = key
-        console.log(n)
-        let index = this.brains.findIndex(x => {x.id == key})
-        console.log(index, this.brains.length)
-        if (index == -1){
-          this.brains.push(n)
-        }
-        //else{
-        //   brains[index] = n
-        // }
-        // this.brains = brains
+      this.brains[key] = node
+      //console.log(this.brains)
+      // let brains = JSON.parse(JSON.stringify(this.brains))
+      // // console.log(node,key)
+      // // async function(node, key)
+      // // // store.commit('gun/addGunBrains', {node:node, key: key}
+      // // {
+      //   //  console.log(node, key)
+      //   // let brains = JSON.parse(JSON.stringify(this.brains))
+      //   console.log(brains)
+      // let n = JSON.parse(JSON.stringify(node['_']['>'])) //Object.assign({},node['_']['>'])
+      // n.id = key
+      // console.log(n)
+      // let index = this.brains.findIndex(x => {x.id == key})
+      // console.log(index, this.brains.length)
+      // if (index == -1){
+      //   this.brains[key] = n
+      // }
+      //else{
+      //   brains[index] = n
+      // }
+      // this.brains = brains
 
       // }
     },
@@ -66,12 +82,19 @@ export default {
   watch:{
     gunBrains(){
       console.log(this.gunBrains)
+    },
+    rootNode(){
+      this.root = this.rootNode
+      this.listen()
     }
   },
   computed: {
     gunBrains() {
       return this.$store.state.gun.gunBrains
     },
+    rootNode(){
+      return this.$store.state.gun.rootNode
+    }
   }
 }
 </script>

@@ -61,6 +61,7 @@ const plugin = {
     }
 
     app.config.globalProperties.$saveNodeToGun = async function(node){
+      console.log(store.state.gun.rootNode)
       let path = gun.get(store.state.gun.rootNode)
       path.set(node)
       //console.log("Brain", store.state.core.brain, store.state.core.galaxy, store.state.core.galaxy.worlds, node)
