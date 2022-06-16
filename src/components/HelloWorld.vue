@@ -40,7 +40,7 @@
   <b-tab title="Workspaces">
     <p>Workspaces</p>
     <b-list-group>
-      <BrainView v-for="brain in Object.values(brains).slice().reverse()" :key="brain['#']" :brain="brain" />
+      <BrainView v-for="(brain,i) in Object.values(brains).slice().reverse()" :key="i" :brain="brain" />
     </b-list-group>
   </b-tab>
 
@@ -74,6 +74,7 @@ workspaces boot
 
 <script>
 import BrainView from '@/components/BrainView.vue'
+import { v4 as uuidv4 } from 'uuid';
 // import ActivesView from '@/components/ActivesView.vue'
 
 export default {
@@ -113,7 +114,12 @@ export default {
       )
     },
     async update(node,key){
-      this.brains[key] = node
+      console.log(key, node)
+      if (node != null){
+        this.brains[key] = node
+        this.$store.commit('gun/setGunBrains', this.brains)
+      }
+
       //console.log(this.brains[key].date)
 
       // let brainArray = []
@@ -132,7 +138,7 @@ export default {
       //       })
       // console.log(brainArray)
 
-      this.$store.commit('gun/setGunBrains', this.brains)
+
       //console.log(this.brains)
       // let brains = JSON.parse(JSON.stringify(this.brains))
       // // console.log(node,key)
@@ -158,8 +164,8 @@ export default {
       // }
     },
     async save(){
-      
-      let node = { date:Date.now(), name: this.node.name, description: this.node.description}
+
+      let node = { id: this.node.id || uuidv4(), date:Date.now(), name: this.node.name, description: this.node.description}
       await this.$saveNodeToGun(node)
       this.node = {}
     },

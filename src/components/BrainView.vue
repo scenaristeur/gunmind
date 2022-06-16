@@ -3,7 +3,7 @@
     <!-- {{actives.includes(id)}} -->
     {{brain.name}} , <small><i>{{new Date(brain.date).toLocaleString()}} </i></small>
     <small><i>{{brain}}</i></small>
-    <b-button @click="deleteBrain">Delete</b-button>
+    <b-button @click.stop="deleteBrain">Delete</b-button>
   </b-list-group-item>
 </template>
 

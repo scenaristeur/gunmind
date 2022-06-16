@@ -24,9 +24,14 @@ const mutations = {
      //console.log(b)
     state.gunBrains = b
   },
+  // deleteBrain(state, b){
+  //   let root = state.gun.get(state.rootNode)
+  //   console.log(root,b)
+  //   state.gun.get(state.rootNode).get(b['_']['#']).put(null)
+  // },
   deleteBrain(state, b){
     console.log(b)
-    state.gun.get(b['_']).set(null)
+    state.gun.get(state.rootNode).get(b['_']).put(null)
   },
   // async addGunBrains(state, b){
   // //  console.log(b)
