@@ -31,26 +31,37 @@
   </b-col>
 </b-row>
 
-<ActivesView />
+<b-tabs content-class="mt-3">
 
-<!-- {{Object.values(brains)}} -->
-<!-- <b-row>
-<b-table
-:items="Object.values(brains)"
-selectable
-@row-selected="onRowSelected"
-@event="">
+  <b-tab title="Workspaces">
+    <p>Workspaces</p>
+    <b-list-group>
+      <BrainView v-for="brain in Object.values(brains).slice().reverse()" :key="brain['#']" :brain="brain" />
+    </b-list-group>
+  </b-tab>
+
+  <b-tab v-for="a in actives" :key="a" :title="gunBrains[a].name">
+    <b-button @click="toggleActive(a)" size="sm">close</b-button>
+    <p>{{gunBrains[a]}}</p>
+
+  </b-tab>
+  <!-- <ActivesView /> -->
+
+  <!-- {{Object.values(brains)}} -->
+  <!-- <b-row>
+  <b-table
+  :items="Object.values(brains)"
+  selectable
+  @row-selected="onRowSelected"
+  @event="">
 </b-table>
 
 </b-row> -->
 
-<b-list-group>
-  <BrainView v-for="brain in brains" :key="brain['#']" :brain="brain" />
-</b-list-group>
 
 
 
-
+</b-tabs>
 
 workspaces boot
 
@@ -59,12 +70,13 @@ workspaces boot
 
 <script>
 import BrainView from '@/components/BrainView.vue'
-import ActivesView from '@/components/ActivesView.vue'
+// import ActivesView from '@/components/ActivesView.vue'
 
 export default {
   name: 'HelloWorld',
   components: {
-    BrainView, ActivesView
+    BrainView,
+    // ActivesView
   },
   data(){
     return {
@@ -98,6 +110,24 @@ export default {
     },
     async update(node,key){
       this.brains[key] = node
+      //console.log(this.brains[key].date)
+
+      // let brainArray = []
+      // for (const [key, node] of Object.entries(this.brains)) {
+      //   console.log(key, node);
+      //   node.key = key
+      //   brainArray.push(node)
+      // }
+      // brainArray.sort((a, b) => {
+      //   console.log(a.date, b.date)
+      //     return b.date - a.date;
+      // });
+      //       let brainArray = Object.entries(this.brains).map((key, node) => {
+      //         node.key = key
+      //         return node
+      //       })
+      // console.log(brainArray)
+
       this.$store.commit('gun/setGunBrains', this.brains)
       //console.log(this.brains)
       // let brains = JSON.parse(JSON.stringify(this.brains))
@@ -130,6 +160,9 @@ export default {
     },
     onSelected(r){
       console.log(r)
+    },
+    toggleActive(id){
+      this.$store.commit('gun/toggleActive', id)
     }
   },
   watch:{
@@ -151,7 +184,13 @@ export default {
     // },
     rootNode(){
       return this.$store.state.gun.rootNode
-    }
+    },
+    actives() {
+      return this.$store.state.gun.actives
+    },
+    gunBrains() {
+      return this.$store.state.gun.gunBrains
+    },
   }
 }
 </script>

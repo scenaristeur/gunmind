@@ -21,8 +21,12 @@ const mutations = {
     //  console.log(state.actives)
   },
   setGunBrains(state, b){
-    //  console.log(b)
+     //console.log(b)
     state.gunBrains = b
+  },
+  deleteBrain(state, b){
+    console.log(b)
+    state.gun.get(b['_']).set(null)
   },
   // async addGunBrains(state, b){
   // //  console.log(b)

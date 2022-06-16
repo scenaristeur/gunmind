@@ -1,15 +1,12 @@
 <template>
   <div>
-    <b-tabs content-class="mt-3">
+
       <b-tab v-for="a in actives" :key="a" :title="gunBrains[a].name">
         <b-button @click="toggleActive(a)" size="sm">remove</b-button>
         <p>{{gunBrains[a]}}</p>
 
       </b-tab>
-      <b-tab title="Workspaces">
-        <p>I'm the second tab</p>
-      </b-tab>
-    </b-tabs>
+
     <!-- {{ gunBrains}} -->
     <!-- {{actives}} -->
   </div>
@@ -20,7 +17,7 @@
 
 export default {
   name: 'ActivesView',
-  
+
   // components: {
   //   HelloWorld
   // },

@@ -1,8 +1,9 @@
 <template>
   <b-list-group-item button :variant="actives.includes(id) ? 'info' : 'light'" @click="onSelected">
     <!-- {{actives.includes(id)}} -->
-    {{brain.name}} , <small><i>{{brain.date}} </i></small>
-    <!-- <small><i>{{brain}}</i></small> -->
+    {{brain.name}} , <small><i>{{new Date(brain.date).toLocaleString()}} </i></small>
+    <small><i>{{brain}}</i></small>
+    <b-button @click="deleteBrain">Delete</b-button>
   </b-list-group-item>
 </template>
 
@@ -30,6 +31,9 @@ export default {
       console.log(this.brain['_']['#'], this.brain.name)
       this.id = this.brain['_']['#']
       this.$store.commit('gun/toggleActive', this.brain['_']['#'])
+    },
+    deleteBrain(){
+      this.$store.commit('gun/deleteBrain', this.brain)
     }
   },
   computed: {
