@@ -30,10 +30,10 @@ loadFonts()
 
 export const gun = Gun({
   peers: [
-    // 'https://spogg.herokuapp.com/gun',
+    'https://spogg.herokuapp.com/gun',
     'http://localhost:8090/gun',
-    // 'https://gun-manhattan.herokuapp.com/gun',
-    // 'http://gunjs.herokuapp.com/gun/'
+    'https://gun-manhattan.herokuapp.com/gun',
+    'http://gunjs.herokuapp.com/gun/'
   ],// run gun-starter-app on port 9090,
   localStorage:false
 })
