@@ -5,21 +5,21 @@
     :counter="10" -->
     <v-row>
       <v-col cols="12" md="8" >
-      <v-text-field
-      v-model="root"
-      label="Workspace"
-      required
-      ></v-text-field>
-    </v-col>
-    <v-col cols="12" md="2" >
-      <!-- <button @click="updateRootNode">Change Workspace</button> -->
-      <v-btn
-      flat
-      color="secondary"
-      @click="updateRootNode"
-      >
-      Change Workspace
-    </v-btn>
+        <v-text-field
+        v-model="root"
+        label="Workspace"
+        required
+        ></v-text-field>
+      </v-col>
+      <v-col cols="12" md="2" >
+        <!-- <button @click="updateRootNode">Change Workspace</button> -->
+        <v-btn
+        flat
+        color="secondary"
+        @click="updateRootNode"
+        >
+        Change Workspace
+      </v-btn>
     </v-col>
     <v-col cols="12" md="2">
       <!-- <button @click="resetRootNode">Default Workspace</button> -->
@@ -30,29 +30,82 @@
       >
       Default Workspace
     </v-btn>
-    </v-col>
-    <br>
-    <!-- <input v-model="node.name" /> -->
-    <v-text-field
-    v-model="node.name"
-    :rules="nameRules"
-    :counter="10"
-    label="Node name"
-    required
-    ></v-text-field>
-    <!-- <button @click="save">Save</button> -->
+  </v-col>
+  <br>
+  <!-- <input v-model="node.name" /> -->
+  <v-text-field
+  v-model="node.name"
 
-    <v-btn
-    flat
-    color="secondary"
-    @click="save"
-    >
-    Add Brain
-  </v-btn>
+  label="Node name"
+  required
+  ></v-text-field>
+  <!-- <button @click="save">Save</button> -->
+
+  <v-btn
+  flat
+  color="secondary"
+  @click="save"
+  >
+  Add Brain
+</v-btn>
 
 </v-row>
-<!-- - {{ brains }} - -->
+
+
+<v-simple-table>
+   <template v-slot:default>
+     <thead>
+       <tr>
+         <th class="text-left">
+           Name
+         </th>
+         <th class="text-left">
+           Date
+         </th>
+       </tr>
+     </thead>
+     <tbody>
+       <tr
+         v-for="item in brains"
+         :key="item.name"
+       >
+         <td>{{ item.name }}</td>
+         <td>{{ item.date }}</td>
+       </tr>
+     </tbody>
+   </template>
+ </v-simple-table>
+
+
+<v-list dense>
+  <!-- <v-subheader>REPORTS</v-subheader> -->
+  <v-list-item-group
+  v-model="selectedItem"
+  color="primary"
+  active-class="pink--text"
+  >
+  <v-list-item
+  v-for="brain in brains"
+  :key="brain['#']" :brain="brain"
+
+  >
+  <!-- <v-list-item-icon>
+  <v-icon v-text="item.icon"></v-icon>
+</v-list-item-icon> -->
+<v-list-item-content>
+  <v-list-item-title> {{brain.name}}</v-list-item-title>
+  {{brain.date}}
+</v-list-item-content>
+</v-list-item>
+</v-list-item-group>
+</v-list>
+
 <BrainView v-for="brain in brains" :key="brain['#']" :brain="brain" />
+
+
+
+
+
 workspaces
 
 </v-container>
@@ -68,9 +121,11 @@ export default {
   },
   data(){
     return {
+      selectedItem : 1,
       node:  {},
       brains: {},
-      root : this.$store.state.gun.rootNode
+      root : this.$store.state.gun.rootNode,
+
     }
   },
   created(){
@@ -128,6 +183,9 @@ export default {
     }
   },
   watch:{
+    selectedItem(){
+      console.log("selected", this.selectedItem)
+    },
     gunBrains(){
       console.log(this.gunBrains)
     },
