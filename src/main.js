@@ -17,13 +17,13 @@ import 'gun/nts'
 
 
 
-let peers = process.env.NODE_ENV === 'development' ? ['http://localhost:8090/gun'] : [
+let peers = process.env.NODE_ENV != 'development' ? ['http://localhost:8090/gun'] : [
   'https://spogg.herokuapp.com/gun',
   'https://gun-manhattan.herokuapp.com/gun',
   // 'http://gunjs.herokuapp.com/gun/'
 ]
 
-console.log(process.env.NODE_ENV, "ppers", peers)
+console.log(process.env.NODE_ENV, "peers", peers)
 export const gun = Gun({
   peers: peers,// run gun-starter-app on port 9090,
   localStorage:false

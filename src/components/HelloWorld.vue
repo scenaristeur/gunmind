@@ -19,7 +19,11 @@
     <b-col cols="12" md="9" >
       <b-form-input
       v-model="node.name"
-      placeholder="Node name"
+      placeholder="Brain name"
+      ></b-form-input>
+      <b-form-input
+      v-model="node.description"
+      placeholder="Brain description"
       ></b-form-input>
     </b-col>
     <b-col cols="12" md="3" >
@@ -154,7 +158,8 @@ export default {
       // }
     },
     async save(){
-      let node = { date:Date.now(), name: this.node.name}
+      
+      let node = { date:Date.now(), name: this.node.name, description: this.node.description}
       await this.$saveNodeToGun(node)
       this.node = {}
     },
