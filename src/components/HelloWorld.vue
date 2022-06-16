@@ -1,14 +1,61 @@
 <template>
-  <div class="hello">
-    <input v-model="root" placeholder="root Node"/>
-    <button @click="updateRootNode">Change Workspace</button>
-    <button @click="resetRootNode">Default Workspace</button><br>
-    <input v-model="node.name" />
-    <button @click="save">Save</button>
-    <!-- - {{ brains }} - -->
-    <BrainView v-for="brain in brains" :key="brain['#']" :brain="brain" />
-    workspaces
-  </div>
+  <v-container>
+    <!-- <input v-model="root" placeholder="root Node"/> -->
+    <!-- :rules="nameRules"
+    :counter="10" -->
+    <v-row>
+      <v-col cols="12" md="8" >
+      <v-text-field
+      v-model="root"
+      label="Workspace"
+      required
+      ></v-text-field>
+    </v-col>
+    <v-col cols="12" md="2" >
+      <!-- <button @click="updateRootNode">Change Workspace</button> -->
+      <v-btn
+      flat
+      color="secondary"
+      @click="updateRootNode"
+      >
+      Change Workspace
+    </v-btn>
+    </v-col>
+    <v-col cols="12" md="2">
+      <!-- <button @click="resetRootNode">Default Workspace</button> -->
+      <v-btn
+      flat
+      color="secondary"
+      @click="resetRootNode"
+      >
+      Default Workspace
+    </v-btn>
+    </v-col>
+    <br>
+    <!-- <input v-model="node.name" /> -->
+    <v-text-field
+    v-model="node.name"
+    :rules="nameRules"
+    :counter="10"
+    label="Node name"
+    required
+    ></v-text-field>
+    <!-- <button @click="save">Save</button> -->
+
+    <v-btn
+    flat
+    color="secondary"
+    @click="save"
+    >
+    Add Brain
+  </v-btn>
+
+</v-row>
+<!-- - {{ brains }} - -->
+<BrainView v-for="brain in brains" :key="brain['#']" :brain="brain" />
+workspaces
+
+</v-container>
 </template>
 
 <script>
@@ -31,7 +78,7 @@ export default {
   },
   methods: {
     resetRootNode(){
-        this.$store.commit('gun/setRootNode', "test-brains")
+      this.$store.commit('gun/setRootNode', "test-brains")
     },
     updateRootNode(){
       this.$store.commit('gun/setRootNode', this.root)
