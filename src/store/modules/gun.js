@@ -3,7 +3,8 @@
 const state = () => ({
   rootNode: "test-brains",
   gunBrains : [],
-  gun: null
+  gun: null,
+  actives: []
 })
 
 const mutations = {
@@ -14,9 +15,15 @@ const mutations = {
     state.gunBrains[g.key] =  g.node
     console.log(state.gunBrains)
   },
-  // setGunBrains(state, b){
-  //   state.gunBrains = b
-  // },
+  toggleActive(state,b){
+    //  console.log(b)
+    state.actives.includes(b) ? state.actives = state.actives.filter(a => {return a!=b}) : state.actives.push(b)
+    //  console.log(state.actives)
+  },
+  setGunBrains(state, b){
+    //  console.log(b)
+    state.gunBrains = b
+  },
   // async addGunBrains(state, b){
   // //  console.log(b)
   //   const index = state.gunBrains.findIndex(object => object.key == b.key);

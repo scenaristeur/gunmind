@@ -1,28 +1,28 @@
 <template>
   <b-container>
     <b-row>
-
-      <b-col cols="12" md="9" >
-        <b-form-input v-model="root" placeholder="workspace" />
+      <b-col cols="12" md="8" >
+        <b-form-input v-model="root" />
       </b-col>
-      <b-col cols="12" md="3" >
-        <b-button @click="updateRootNode" variant="info">Change</b-button>
-
+      <b-col cols="12" md="2" >
+        <b-button @click="updateRootNode" variant="info">Change Workspace</b-button>
+      </b-col>
+      <b-col cols="12" md="2">
         <b-button
         variant="info"
         @click="resetRootNode" >
-        Default
+        Default Workspace
       </b-button>
     </b-col>
   </b-row>
   <b-row>
-    <b-col cols="12" md="9" >
+    <b-col cols="12" md="8" >
       <b-form-input
       v-model="node.name"
       placeholder="Node name"
       ></b-form-input>
     </b-col>
-    <b-col cols="12" md="3" >
+    <b-col cols="12" md="2" >
       <b-button
       variant="info"
       @click="save">
@@ -31,25 +31,17 @@
   </b-col>
 </b-row>
 
-<ActivesView />
-
 <!-- {{Object.values(brains)}} -->
-<!-- <b-row>
-<b-table
-:items="Object.values(brains)"
-selectable
-@row-selected="onRowSelected"
-@event="">
+<b-row>s
+  <b-table
+  :items="Object.values(brains)"
+  selectable
+  @row-selected="onRowSelected">
 </b-table>
 
-</b-row> -->
+</b-row>
 
-<b-list-group>
-  <BrainView v-for="brain in brains" :key="brain['#']" :brain="brain" />
-</b-list-group>
-
-
-
+<BrainView v-for="brain in brains" :key="brain['#']" :brain="brain" />
 
 
 workspaces boot
@@ -59,16 +51,15 @@ workspaces boot
 
 <script>
 import BrainView from '@/components/BrainView.vue'
-import ActivesView from '@/components/ActivesView.vue'
 
 export default {
   name: 'HelloWorld',
   components: {
-    BrainView, ActivesView
+    BrainView
   },
   data(){
     return {
-      node:  {},
+        node:  {},
       brains: {},
       root : this.$store.state.gun.rootNode,
 
@@ -98,7 +89,6 @@ export default {
     },
     async update(node,key){
       this.brains[key] = node
-      this.$store.commit('gun/setGunBrains', this.brains)
       //console.log(this.brains)
       // let brains = JSON.parse(JSON.stringify(this.brains))
       // // console.log(node,key)
@@ -128,7 +118,7 @@ export default {
       await this.$saveNodeToGun(node)
       this.node = {}
     },
-    onSelected(r){
+    onRowSelected(r){
       console.log(r)
     }
   },
@@ -136,19 +126,18 @@ export default {
     // selectedItem(){
     //   console.log("selected", this.selectedItem)
     // },
-    // brains(){
-    //   console.log(this.brains)
-    //   this.$store.commit('gun/setGunBrains', this.brains)
-    // },
+    gunBrains(){
+      console.log(this.gunBrains)
+    },
     rootNode(){
       this.root = this.rootNode
       this.listen()
     }
   },
   computed: {
-    // gunBrains() {
-    //   return this.$store.state.gun.gunBrains
-    // },
+    gunBrains() {
+      return this.$store.state.gun.gunBrains
+    },
     rootNode(){
       return this.$store.state.gun.rootNode
     }

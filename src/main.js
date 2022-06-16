@@ -1,6 +1,9 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import './registerServiceWorker'
+//import './registerServiceWorker'
+import BootstrapVue3 from 'bootstrap-vue-3'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'
 import store from './store'
 
 import Gun from 'gun/gun'
@@ -12,29 +15,17 @@ import 'gun/lib/rindexed'
 import 'gun/lib/webrtc'
 import 'gun/nts'
 
-import 'vuetify/styles' // Global CSS has to be imported
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
-import { loadFonts } from './plugins/webfontloader'
 
 
-const vuetify = createVuetify({
-  components,
-  directives,
-})
+let peers = process.env.NODE_ENV === 'development' ? ['http://localhost:8090/gun'] : [
+  'https://spogg.herokuapp.com/gun',
+  'https://gun-manhattan.herokuapp.com/gun',
+  // 'http://gunjs.herokuapp.com/gun/'
+]
 
-// app.use(vuetify)
-
-loadFonts()
-
+console.log(process.env.NODE_ENV, "ppers", peers)
 export const gun = Gun({
-  peers: [
-    'https://spogg.herokuapp.com/gun',
-    'http://localhost:8090/gun',
-    'https://gun-manhattan.herokuapp.com/gun',
-    'http://gunjs.herokuapp.com/gun/'
-  ],// run gun-starter-app on port 9090,
+  peers: peers,// run gun-starter-app on port 9090,
   localStorage:false
 })
 console.log(SEA, gun)
@@ -44,5 +35,5 @@ import GunPlugin from './plugins/gun-plugin';
 const app = createApp(App)
 app.use(GunPlugin, {store: store, gun: gun});
 app.use(store)
-app.use(vuetify)
-  .mount('#app')
+app.use(BootstrapVue3)
+.mount('#app')
