@@ -1,7 +1,7 @@
 // import Vue from 'vue'
 
 const state = () => ({
-  rootNode: "test-brains",
+  rootNode: "test-brains1",
   gunBrains : [],
   gun: null,
   actives: []
